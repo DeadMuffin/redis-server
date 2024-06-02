@@ -154,7 +154,15 @@ class TestRedisServer(unittest.TestCase):
         slave_server.shutdown()
         slave_thread.join()
 
+    @tag('shutdown')
+    def test_shutdown(self):
+        '''Test the SHUTDOWN command'''
+        response = self.send_command(b"*1\r\n$8\r\nSHUTDOWN\r\n")
+        self.assertEqual(response, b"+OK\r\n")
 
+        # Ensure the server is actually shutdown
+        with self.assertRaises(ConnectionRefusedError):
+            self.send_command(b"*1\r\n$4\r\nPING\r\n")
 
 
 if __name__ == "__main__":
