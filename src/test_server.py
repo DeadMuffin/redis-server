@@ -171,4 +171,9 @@ if __name__ == "__main__":
                 test_suite.addTest(TestRedisServer(test_name))
 
     # Run the test suite
-    unittest.TextTestRunner().run(test_suite)
+    try:
+        unittest.TextTestRunner().run(test_suite)
+    except KeyboardInterrupt:
+        print("\nExiting...")
+        sys.exit(0)
+    

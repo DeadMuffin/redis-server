@@ -1,6 +1,6 @@
 import socket
 import argparse
-
+import sys
 from utils.utils import decode_resp, encode_resp
 
 def send_command(command, port):
@@ -33,4 +33,8 @@ def main():
     commands = [arg if not arg.isdigit() else int(arg) for arg in args.commands]
     send_command(commands, args.port)
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("\nExiting...")
+        sys.exit(0)

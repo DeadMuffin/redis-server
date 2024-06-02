@@ -52,7 +52,9 @@ class RedisServer:
         self.server_socket.close()
         logger.info("Server shutdown initiated")
 
-if __name__ == "__main__":
+
+
+def main():
     parser = argparse.ArgumentParser(description="Simple Redis server")
     parser.add_argument('--port', type=int, default=6379, help='Port number to use')
     parser.add_argument('--replicaof', type=str, help='Master host and port number to use for slave')
@@ -65,3 +67,11 @@ if __name__ == "__main__":
         server = RedisServer(PORT=args.port, role="slave", master_host=master_host, master_port=int(master_port))
 
     server.start_server()
+
+if __name__ == "__main__":
+    import sys
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("\nExiting...")
+        sys.exit(0)
